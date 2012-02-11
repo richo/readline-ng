@@ -34,10 +34,7 @@ module ReadlineNG
 
     def puts_above(string)
       if visible
-        @buf.length.times do
-          # Backspace to beginning of line
-          _print CONTROL_BS
-        end
+        backspace(@buf.length)
         _print string
         _puts CONTROL_CR
         _print @buf
@@ -81,8 +78,8 @@ module ReadlineNG
       end
     end
 
-    def backspace
-      print CONTROL_BS,BLANK,CONTROL_BS
+    def backspace(n=1)
+      print CONTROL_BS*n,BLANK*n,CONTROL_BS*n
     end
 
     def _print(c)
