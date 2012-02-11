@@ -10,6 +10,8 @@ module ReadlineNG
   CONTROL_LF  = "\x0a"
   CONTROL_CR  = "\x0d"
 
+  KB_BS  = "\x7F"
+
   class Reader
 
     # TODO Arrange for the terminal to be in raw mode etc.
@@ -39,7 +41,7 @@ module ReadlineNG
 
     def print_char(c)
       case c
-      when "\x7F"
+      when KB_BS
         print CONTROL_BS
       else
         print c
