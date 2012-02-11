@@ -33,11 +33,11 @@ module ReadlineNG
       if visible
         @buf.length.times do
           # Backspace to beginning of line
-          print CONTROL_BS
+          _print CONTROL_BS
         end
-        print string
-        puts CONTROL_CR
-        print @buf
+        _print string
+        _puts CONTROL_CR
+        _print @buf
       end
     end
 
@@ -79,6 +79,15 @@ module ReadlineNG
     def backspace
       print CONTROL_BS,BLANK,CONTROL_BS
     end
+
+    def _print(c)
+      print c if visible
+    end
+
+    def _puts(c)
+      puts c if visible
+    end
+
 
   end
 end
