@@ -17,6 +17,8 @@ module ReadlineNG
 
   class Reader
 
+    @@initialized = false
+
     # TODO Arrange for the terminal to be in raw mode etc.
     # XXX This probably needs to be a singleton, having more than one doesn't
     # make a whole lot of sense, although potentially giving out rope is not a
@@ -27,10 +29,15 @@ module ReadlineNG
     def filter
     end
 
-    def initialize
+    def initialize(visible=true)
       @buf = ""
-      @visible = true
+      @visible = visible
       @lines = []
+      if @@initialized
+        STDERR.puts "A ReadlineNG reader is already instanciated, expect weirdness"
+      else
+        @@initialized = true
+      end
     end
 
     def puts_above(string)
