@@ -23,6 +23,9 @@ module ReadlineNG
 
     attr_accessor :lines, :visible
 
+    def filter
+    end
+
     def initialize
       @buf = ""
       @visible = true
@@ -44,6 +47,7 @@ module ReadlineNG
     def tick
       t = STDIN.read_nonblock(128)
       process(t)
+      filter # Expect a 3rd party dev to override this
 
       raise Interrupt if @buf.include?(CONTROL_INT)
 
