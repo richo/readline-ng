@@ -60,6 +60,14 @@ module ReadlineNG
       nil
     end
 
+    def line
+      @lines.shift
+    end
+
+    def each_line
+      yield @lines.shift while @lines.any?
+    end
+
   end
 end
 
