@@ -5,6 +5,11 @@ module ReadlineNG
   VERSION_PATCH = 1
   VERSION = "#{VERSION_MAJOR}.#{VERSION_MINOR}.#{VERSION_PATCH}"
 
+  CONTROL_BS  = "\x08"
+  CONTROL_INT = "\x03"
+  CONTROL_LF  = "\x0a"
+  CONTROL_CR  = "\x0d"
+
   class Reader
 
     # TODO Arrange for the terminal to be in raw mode etc.
@@ -24,9 +29,9 @@ module ReadlineNG
       if visible
         @buf.length.times do
           # Backspace to beginning of line
-          print_char("\x0b")
+          print CONTROL_BS
         end
-        print("#{string}\r")
+        print string
         print @buf
       end
     end
@@ -34,7 +39,7 @@ module ReadlineNG
     def print_char(c)
       case c
       when "\x7F"
-        print "\x0b"
+        print CONTROL_BS
       else
         print c
       end
@@ -45,7 +50,7 @@ module ReadlineNG
       print_char(t) if @visible
       @buf += t
 
-      raise Interrupt if @buf.include?("\x03")
+      raise Interrupt if @buf.include?(CONTROL_INT)
 
       a = @buf.split("\r")
       @buf = @buf[-1] == "\r" ? "" : a.pop
