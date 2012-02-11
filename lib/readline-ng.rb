@@ -17,6 +17,17 @@ module ReadlineNG
       @lines = []
     end
 
+    def puts_above(string)
+      if visible
+        @buf.length.times do
+          # Backspace to beginning of line
+          print_char("\x0b")
+        end
+        print("#{string}\r")
+        print @buf
+      end
+    end
+
     def print_char(c)
       case c
       when "\x7F"
