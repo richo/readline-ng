@@ -12,6 +12,8 @@ module ReadlineNG
 
   KB_BS  = "\x7F"
 
+  BLANK  = " "
+
   class Reader
 
     # TODO Arrange for the terminal to be in raw mode etc.
@@ -72,6 +74,10 @@ module ReadlineNG
       else
         print c
       end
+    end
+
+    def backspace
+      print CONTROL_BS,BLANK,CONTROL_BS
     end
 
   end
