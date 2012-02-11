@@ -43,12 +43,12 @@ module ReadlineNG
 
     def tick
       t = STDIN.read_nonblock(128)
-      print_char(t) if @visible
-      @buf += t
+      process(t)
 
       raise Interrupt if @buf.include?(CONTROL_INT)
 
       a = @buf.split("\r")
+      return if a.empty? && @buf.empty?
       @buf = @buf[-1] == "\r" ? "" : a.pop
 
       @lines += a
@@ -66,13 +66,14 @@ module ReadlineNG
 
     private
 
-    def print_char(c)
+    def process(c)
       case c
       when KB_BS
         @buf.chop!
         backspace
       else
-        print c
+        @buf += c
+        _print c
       end
     end
 
