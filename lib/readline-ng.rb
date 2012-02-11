@@ -32,6 +32,7 @@ module ReadlineNG
           print CONTROL_BS
         end
         print string
+        puts CONTROL_CR
         print @buf
       end
     end
