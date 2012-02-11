@@ -42,6 +42,7 @@ module ReadlineNG
     def print_char(c)
       case c
       when KB_BS
+        @buf.chop!
         print CONTROL_BS
       else
         print c
