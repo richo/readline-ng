@@ -38,6 +38,12 @@ module ReadlineNG
       else
         @@initialized = true
       end
+
+      stty_saved = `stty -g`
+      `stty -echo raw`
+      at_exit do
+        `stty #{stty_saved}`
+      end
     end
 
     def puts_above(string)
