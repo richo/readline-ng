@@ -11,6 +11,7 @@ module ReadlineNG
   CONTROL_CR  = "\x0d"
 
   KB_BS  = "\x7F"
+  KB_CR  = "\x0d"
 
   BLANK  = " "
 
