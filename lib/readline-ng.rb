@@ -39,16 +39,6 @@ module ReadlineNG
       end
     end
 
-    def print_char(c)
-      case c
-      when KB_BS
-        @buf.chop!
-        print CONTROL_BS
-      else
-        print c
-      end
-    end
-
     def tick
       t = STDIN.read_nonblock(128)
       print_char(t) if @visible
@@ -70,6 +60,18 @@ module ReadlineNG
 
     def each_line
       yield @lines.shift while @lines.any?
+    end
+
+    private
+
+    def print_char(c)
+      case c
+      when KB_BS
+        @buf.chop!
+        backspace
+      else
+        print c
+      end
     end
 
   end
