@@ -17,6 +17,15 @@ module ReadlineNG
       @lines = []
     end
 
+    def print_char(c)
+      case c
+      when "\x7F"
+        print "\x0b"
+      else
+        print c
+      end
+    end
+
     def tick
       t = STDIN.read_nonblock(128)
       print_char(t) if @visible
