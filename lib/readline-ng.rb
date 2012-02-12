@@ -79,6 +79,12 @@ module ReadlineNG
       yield @lines.shift while @lines.any?
     end
 
+    def get_line
+      # Blocks!
+      tick until lines.any?
+      line
+    end
+
     private
 
     def process(c)
