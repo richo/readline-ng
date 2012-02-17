@@ -94,9 +94,15 @@ module ReadlineNG
         @buf.chop!
         backspace
       when KB_LEFT
-        @ind -= 1 unless @ind == 0
+        unless @ind == 0
+          _print CONTROL_BS
+          @ind -= 1
+        end
       when KB_RIGHT
-        @ind += 1 unless @ind == @buf.length
+        unless @ind == @buf.length
+          _print @buf[@ind]
+          @ind += 1
+        end
       else
         @buf.insert(@ind, c)
         @ind += 1
