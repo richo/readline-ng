@@ -31,6 +31,7 @@ module ReadlineNG
 
     def initialize(visible=true)
       @buf = ""
+      @ind = 0
       @visible = visible
       @lines = []
       if @@initialized
@@ -92,14 +93,29 @@ module ReadlineNG
       when KB_BS
         @buf.chop!
         backspace
+      when KB_LEFT
+        @ind -= 1 unless @ind == 0
+      when KB_RIGHT
+        @ind += 1 unless @ind == @buf.length
       else
-        @buf += c
-        _print c
+        @buf.insert(@ind, c)
+        @ind += 1
+        if @ind == @buf.length
+          _print c
+        else
+          # TODO Only backspace to the new character
+          redraw
+        end
       end
     end
 
     def backspace(n=1)
       print CONTROL_BS*n,BLANK*n,CONTROL_BS*n
+    end
+
+    def redraw
+      backspace(@buf.length)
+      _print(@buf)
     end
 
     def _print(c)
