@@ -49,7 +49,7 @@ module ReadlineNG
     def puts_above(string)
       if visible
         backspace(@buf.length)
-        _print string.gsub("\n", "\r")
+        _print string.gsub("\n", "\n\r")
         _puts CONTROL_CR
         _print @buf
       end
