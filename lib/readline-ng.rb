@@ -24,16 +24,17 @@ module ReadlineNG
     # make a whole lot of sense, although potentially giving out rope is not a
     # terrible idea here
 
-    attr_accessor :lines, :visible
+    attr_accessor :lines, :visible, :polling_resolution
 
     def filter
     end
 
-    def initialize(visible=true)
+    def initialize(visible=true, opts = {})
       @buf = ""
       @ind = 0
       @visible = visible
       @lines = []
+      @polling_resolution = opts[:polling_resolution] || 20
       if @@initialized
         STDERR.puts "A ReadlineNG reader is already instanciated, expect weirdness"
       else
@@ -44,6 +45,13 @@ module ReadlineNG
       `stty -echo raw`
       at_exit do
         `stty #{stty_saved}`
+      end
+    end
+
+    def sleep(n)
+      (n * polling_resolution).times do
+        tick
+        sleep 1.0/polling_resolution
       end
     end
 
