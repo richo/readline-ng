@@ -12,6 +12,8 @@ module ReadlineNG
 
   KB_BS  = "\x7F"
   KB_CR  = "\x0d"
+  KB_LEFT   = "LEFT" # XXX PLACEHOLDERS
+  KB_RIGHT  = "RIGHT"
 
   BLANK  = " "
 
