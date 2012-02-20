@@ -2,3 +2,18 @@ Readline-NG is /not/ a drop in replacement for readline.
 
 It addresses a very specific need I had inside a twitter client, but
 hopefully it's of use to someone else, too.
+
+It gives you an interface for a single input line underneath rows of scrolling
+text. At the moment it's largely feature incomplete, and it's development tracks
+twat pretty closely.
+
+BUGS:
+
+Control characters make it properly angry. Basically everything that's a result
+of putting the terminal into raw mode
+
+If you type over the end of the line, it bounces a new line which can't be
+removed.
+
+It doesn't handle left/right etc in the slightest. Non printable characters can
+fuck the buffer.
