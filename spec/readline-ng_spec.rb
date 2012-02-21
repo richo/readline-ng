@@ -32,5 +32,14 @@ describe ReadlineNG do
     @reader.line.should == "input"
   end
 
+  it "should handle newlines in amongst inputs" do
+    STDIN.stub(:read_nonblock).and_return("in", "put\racros", "slines\r...")
+    @reader.tick # gets "in"
+    @reader.lines.should be_empty
+    @reader.tick # gets "put\racros"
+    @reader.tick # gets "slines\r..."
+    @reader.lines.should == ["input", "acrosslines"]
+  end
+
 end
 
