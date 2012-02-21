@@ -15,6 +15,8 @@ module ReadlineNG
 
   BLANK  = " "
 
+  class ReaderExists < Exception; end
+
   class Reader
 
     @@initialized = false
@@ -29,12 +31,19 @@ module ReadlineNG
     def filter
     end
 
+    def self.new!
+      begin
+        Reader.new
+      rescue ReaderExists
+
+
+
     def initialize(visible=true)
       @buf = ""
       @visible = visible
       @lines = []
       if @@initialized
-        STDERR.puts "A ReadlineNG reader is already instanciated, expect weirdness"
+        raise ReaderExists
       else
         @@initialized = true
       end
