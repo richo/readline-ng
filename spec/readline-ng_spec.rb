@@ -53,5 +53,10 @@ describe ReadlineNG do
     @reader.get_line.should == "intro"
   end
 
+  it "should not fall over trying to backspace an empty buffer" do
+    STDIN.stub(:read_nonblock).and_return("in", "\x7F"*8, "input\r")
+    @reader.get_line.should == "input"
+  end
+
 end
 
