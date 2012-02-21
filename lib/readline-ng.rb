@@ -39,10 +39,9 @@ module ReadlineNG
         @@initialized = true
       end
 
-      stty_saved = `stty -g`
-      `stty -echo raw`
+      setup
       at_exit do
-        `stty #{stty_saved}`
+        teardown
       end
     end
 
@@ -109,6 +108,16 @@ module ReadlineNG
     def _puts(c)
       puts c if visible
     end
+
+    def setup
+      @stty_saved = `stty -g`
+      `stty -echo raw`
+    end
+
+    def teardown
+      `stty #{@stty_saved}`
+    end
+
 
 
   end
