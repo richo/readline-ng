@@ -41,5 +41,12 @@ describe ReadlineNG do
     @reader.lines.should == ["input", "acrosslines"]
   end
 
+  it "should call a filter method if defined" do
+    STDIN.stub(:read_nonblock).and_return("in", "put")
+    @reader.expects(:filter).twice
+    @reader.tick
+    @reader.tick
+  end
+
 end
 
