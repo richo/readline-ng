@@ -28,7 +28,7 @@ describe ReadlineNG do
     @reader.lines.should be_empty
     @reader.tick # gets "put"
     @reader.lines.should be_empty
-    @reader.tick
+    @reader.tick # gets "\r"
     @reader.line.should == "input"
   end
 
