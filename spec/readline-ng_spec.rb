@@ -1,6 +1,15 @@
 require 'readline-ng'
 require 'mocha'
 
+# Hook to reset internal state between runs
+module ReadlineNG
+  class Reader
+    def self.initialized=(v)
+      @@initialized = v
+    end
+  end
+end
+
 describe ReadlineNG do
 
   before(:each) do
@@ -10,6 +19,7 @@ describe ReadlineNG do
 
   after(:each) do
     @reader.send(:teardown)
+    ReadlineNG::Reader.initialized = false
   end
 
   it "should only return full lines of input" do
