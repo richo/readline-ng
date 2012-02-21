@@ -56,7 +56,7 @@ module ReadlineNG
 
     def tick
       t = STDIN.read_nonblock(128)
-      process(t)
+      t.each_char { |c| process(c) }
       filter # Expect a 3rd party dev to override this
 
       raise Interrupt if @buf.include?(CONTROL_INT)
@@ -98,11 +98,11 @@ module ReadlineNG
     end
 
     def backspace(n=1)
-      print CONTROL_BS*n,BLANK*n,CONTROL_BS*n
+      _print CONTROL_BS*n,BLANK*n,CONTROL_BS*n
     end
 
-    def _print(c)
-      print c if visible
+    def _print(*c)
+      print *c if visible
     end
 
     def _puts(c)
