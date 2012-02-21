@@ -48,5 +48,10 @@ describe ReadlineNG do
     @reader.tick
   end
 
+  it "should let the user backspace out errors" do
+    STDIN.stub(:read_nonblock).and_return("in", "put", "\x7F"*3, "tro\r")
+    @reader.get_line.should == "intro"
+  end
+
 end
 
