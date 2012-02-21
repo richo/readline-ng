@@ -56,6 +56,7 @@ module ReadlineNG
     end
 
     def tick
+      return if @locked
       t = STDIN.read_nonblock(128)
       process(t)
       filter # Expect a 3rd party dev to override this
@@ -72,7 +73,10 @@ module ReadlineNG
     end
 
     def line
-      @lines.shift
+      @locked = true
+      @lines.shift.tap do
+        @locked = false
+      end
     end
 
     def each_line
