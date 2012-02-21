@@ -28,6 +28,8 @@ module ReadlineNG
 
     attr_accessor :lines, :visible, :polling_resolution
 
+    # It's expected that a developer using this gem will overload filter to
+    # implement their own action on each update
     def filter
     end
 
