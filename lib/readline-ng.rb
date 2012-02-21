@@ -19,13 +19,13 @@ module ReadlineNG
 
     @@initialized = false
 
-    # TODO Arrange for the terminal to be in raw mode etc.
     # XXX This probably needs to be a singleton, having more than one doesn't
     # make a whole lot of sense, although potentially giving out rope is not a
     # terrible idea here
 
     attr_accessor :lines, :visible
 
+    # A third party dev can overload filter to implement their own actions
     def filter
     end
 
