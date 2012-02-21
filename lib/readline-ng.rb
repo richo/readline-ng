@@ -105,8 +105,8 @@ module ReadlineNG
       print *c if visible
     end
 
-    def _puts(c)
-      puts c if visible
+    def _puts(*c)
+      puts *c if visible
     end
 
     def setup
