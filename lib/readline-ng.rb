@@ -91,6 +91,7 @@ module ReadlineNG
     private
 
     def process(c)
+      # TODO This method is getting monolithic, think about how to modularise it
       case c
       when "\r"
         @lines += [@buf]
@@ -113,12 +114,23 @@ module ReadlineNG
       else
         @buf = @buf.insert(@index, c)
         @index += 1
-        _print c
+        if @index == @buf.length
+          _print c
+        else
+          redraw
+        end
       end
     end
 
     def reset
       @index, @buf = 0, ""
+    end
+
+    def redraw
+      # TODO We can get away with only going back as far as index, I should
+      # think
+      backspace(@buf.length)
+      _print @buf
     end
 
     def backspace(n=1)
