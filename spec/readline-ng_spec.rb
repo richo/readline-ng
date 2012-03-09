@@ -58,9 +58,14 @@ describe ReadlineNG do
     @reader.get_line.should == "input"
   end
 
-  it "should respect the left and right keys" do
+  it "should respect the left key" do
     STDIN.stub(:read_nonblock).and_return("asdf", "\x25"*2, "__\r")
     @reader.get_line.should == "as__df"
+  end
+
+  it "should respect the right key" do
+    STDIN.stub(:read_nonblock).and_return("asdf", "\x25"*2, "__", "\x27", "++\r" )
+    @reader.get_line.should == "as__d++f"
   end
 
 end
