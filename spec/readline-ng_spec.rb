@@ -70,7 +70,7 @@ describe ReadlineNG do
 
   it "should respect the right key" do
     STDIN.stub(:read_nonblock).and_return("asdf", "\x25"*2, "__", "\x27", "++\r" )
-    @reader.get_line.should == "as__d++f"
+    @reader.get_line.should == "as_++_df"
   end
 
   it "should not allow the user to right after an empty buffer" do
