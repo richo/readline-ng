@@ -13,6 +13,9 @@ module ReadlineNG
   KB_BS  = "\x7F"
   KB_CR  = "\x0d"
 
+  KB_LEFT  = "\x25"
+  KB_RIGHT = "\x27"
+
   BLANK  = " "
 
   class Reader
@@ -98,6 +101,14 @@ module ReadlineNG
         if @buf.chop!
           @index -= 1
           backspace
+        end
+      when KB_LEFT
+        if @buf and @index != 0
+          @index -= 1
+        end
+      when KB_RIGHT
+        if @buf and @index < @buf.length
+          @index -= 1
         end
       else
         @buf = @buf.insert(@index, c)

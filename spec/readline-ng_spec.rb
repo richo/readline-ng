@@ -63,9 +63,19 @@ describe ReadlineNG do
     @reader.get_line.should == "as__df"
   end
 
+  it "should not allow the user to left before an empty buffer" do
+    STDIN.stub(:read_nonblock).and_return("\x25"*2, "__", "\x25"*2, "\r")
+    @reader.get_line.should == "__"
+  end
+
   it "should respect the right key" do
     STDIN.stub(:read_nonblock).and_return("asdf", "\x25"*2, "__", "\x27", "++\r" )
     @reader.get_line.should == "as__d++f"
+  end
+
+  it "should not allow the user to right after an empty buffer" do
+    STDIN.stub(:read_nonblock).and_return("\x27"*2, "__", "\x27"*2, "\r")
+    @reader.get_line.should == "__"
   end
 
 end
