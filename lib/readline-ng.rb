@@ -31,6 +31,7 @@ module ReadlineNG
 
     def initialize(visible=true, opts = {})
       @buf = ""
+      @index = 0
       @visible = visible
       @lines = []
       @polling_resolution = opts[:polling_resolution] || 20
@@ -66,14 +67,6 @@ module ReadlineNG
       t = STDIN.read_nonblock(128)
       t.each_char { |c| process(c) }
       filter # Expect a 3rd party dev to override this
-
-      raise Interrupt if @buf.include?(CONTROL_INT)
-
-      a = @buf.split("\r")
-      return if a.empty? && @buf.empty?
-      @buf = @buf[-1] == "\r" ? "" : a.pop
-
-      @lines += a
     rescue Errno::EAGAIN
       nil
     end
@@ -96,13 +89,25 @@ module ReadlineNG
 
     def process(c)
       case c
+      when "\r"
+        @lines += [@buf]
+        reset
+      when CONTROL_INT
+        raise Interrupt
       when KB_BS
-        @buf.chop!
-        backspace
+        if @buf.chop!
+          @index -= 1
+          backspace
+        end
       else
-        @buf += c
+        @buf = @buf.insert(@index, c)
+        @index += 1
         _print c
       end
+    end
+
+    def reset
+      @index, @buf = 0, ""
     end
 
     def backspace(n=1)
@@ -125,8 +130,6 @@ module ReadlineNG
     def teardown
       `stty #{@stty_saved}`
     end
-
-
 
   end
 end
