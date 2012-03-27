@@ -2,7 +2,7 @@ module ReadlineNG
 
   VERSION_MAJOR = 0
   VERSION_MINOR = 0
-  VERSION_PATCH = 5
+  VERSION_PATCH = 6
   VERSION = "#{VERSION_MAJOR}.#{VERSION_MINOR}.#{VERSION_PATCH}"
 
   CONTROL_BS  = "\x08"
@@ -50,7 +50,7 @@ module ReadlineNG
       end
     end
 
-    def sleep(n)
+    def wait(n)
       (n * polling_resolution).times do
         tick
         sleep 1.0/polling_resolution
