@@ -83,5 +83,7 @@ describe ReadlineNG do
     @reader.get_line.should == "'''"
   end
 
+  # TODO it "should erase the displayed line when input is terminated" do
+
 end
 
