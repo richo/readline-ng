@@ -123,6 +123,7 @@ module ReadlineNG
     end
 
     def reset
+      backspace(@buf.length)
       @index, @buf = 0, ""
     end
 
