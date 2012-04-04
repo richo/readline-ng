@@ -11,7 +11,12 @@ module ReadlineNG
 
     def each_chunk
       until @buf.empty?
-        yield @buf.slice!(0)
+        t = @buf.slice!(0)
+        if t == "\e"
+          t += @buf.slice!(0..1)
+        end
+
+        yield t
       end
     end
 
