@@ -78,5 +78,10 @@ describe ReadlineNG do
     @reader.get_line.should == "__"
   end
 
+  it "should recieve and process single quotes" do
+    STDIN.stub(:read_nonblock).and_return("'''", "\r")
+    @reader.get_line.should == "'''"
+  end
+
 end
 
