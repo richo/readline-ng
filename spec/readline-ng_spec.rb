@@ -59,22 +59,22 @@ describe ReadlineNG do
   end
 
   it "should respect the left key" do
-    STDIN.stub(:read_nonblock).and_return("asdf", "\x25"*2, "__\r")
+    STDIN.stub(:read_nonblock).and_return("asdf", ReadlineNG::KB_LEFT*2, "__\r")
     @reader.get_line.should == "as__df"
   end
 
   it "should not allow the user to left before an empty buffer" do
-    STDIN.stub(:read_nonblock).and_return("\x25"*2, "__", "\x25"*2, "\r")
+    STDIN.stub(:read_nonblock).and_return(ReadlineNG::KB_LEFT*2, "__", ReadlineNG::KB_LEFT*2, "\r")
     @reader.get_line.should == "__"
   end
 
   it "should respect the right key" do
-    STDIN.stub(:read_nonblock).and_return("asdf", "\x25"*2, "__", "\x27", "++\r" )
+    STDIN.stub(:read_nonblock).and_return("asdf", ReadlineNG::KB_LEFT*2, "__", ReadlineNG::KB_RIGHT, "++\r" )
     @reader.get_line.should == "as_++_df"
   end
 
   it "should not allow the user to right after an empty buffer" do
-    STDIN.stub(:read_nonblock).and_return("\x27"*2, "__", "\x27"*2, "\r")
+    STDIN.stub(:read_nonblock).and_return(ReadlineNG::KB_RIGHT*2, "__", ReadlineNG::KB_RIGHT*2, "\r")
     @reader.get_line.should == "__"
   end
 

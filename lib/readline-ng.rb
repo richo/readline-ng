@@ -1,5 +1,11 @@
 module ReadlineNG
 
+  %w[chunked_string].each do |f|
+    require "readline-ng/#{f}"
+  end
+
+  n = ::ReadlineNG::ChunkedString.new
+
   VERSION_MAJOR = 0
   VERSION_MINOR = 0
   VERSION_PATCH = 7
@@ -13,8 +19,8 @@ module ReadlineNG
   KB_BS  = "\x7F"
   KB_CR  = "\x0d"
 
-  KB_LEFT  = "\x25"
-  KB_RIGHT = "\x27"
+  KB_LEFT  = "\e[C"
+  KB_RIGHT = "\e[D"
 
   BLANK  = " "
 
@@ -34,6 +40,7 @@ module ReadlineNG
 
     def initialize(visible=true, opts = {})
       @buf = ""
+      @chunked = ChunkedString.new
       @index = 0
       @visible = visible
       @lines = []
@@ -67,8 +74,8 @@ module ReadlineNG
     end
 
     def tick
-      t = STDIN.read_nonblock(128)
-      t.each_char { |c| process(c) }
+      @chunked << STDIN.read_nonblock(128)
+      @chunked.each_chunk { |c| process(c) }
       filter # Expect a 3rd party dev to override this
     rescue Errno::EAGAIN
       nil
