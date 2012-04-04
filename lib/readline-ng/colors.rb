@@ -1,6 +1,10 @@
 module ReadlineNG
   class Color
     BOLD = { :off => 1, :on => 22 }
+
+    def to_ansi
+      "[#{FOREGROUND}m"
+    end
   end
 
   # Subclasses

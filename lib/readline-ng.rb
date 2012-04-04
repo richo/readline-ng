@@ -146,7 +146,14 @@ module ReadlineNG
     end
 
     def _print(*c)
-      print *c if visible
+      case
+      when c.is_a?(Array)
+        print *c if visible
+      when c.is_a?(String)
+        print *c if visible
+      when c.is_a?(Color)
+        print c.to_ansi
+      end
     end
 
     def _puts(*c)
