@@ -7,3 +7,13 @@ end
 
 desc 'Default: run specs'
 task :default => :spec
+
+task(:build) do
+  sh "gem build readline-ng.gemspec"
+end
+
+task(:clean) do
+  Dir["*.gem"].each do |gem|
+    sh "rm #{gem}"
+  end
+end
