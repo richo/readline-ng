@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = ReadlineNG::VERSION
   s.authors     = ["Rich Healey"]
   s.email       = ["richo@psych0tik.net"]
-  s.homepage    = "http://github.com/richoH/readline-ng"
+  s.homepage    = "http://github.com/richo/readline-ng"
   s.summary     = "Essentially, readline++"
   s.description = s.summary
 
