@@ -83,6 +83,11 @@ describe ReadlineNG do
     @reader.get_line.should == "'''"
   end
 
+  it "should insert a newline from a trailing backslash" do
+    STDIN.stub(:read_nonblock).and_return("rawr", ?\\, "\r", "thing", "\r")
+    @reader.get_line.should == "rawr\nthing"
+  end
+
   # TODO it "should erase the displayed line when input is terminated" do
 
 end

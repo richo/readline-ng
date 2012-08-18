@@ -101,8 +101,12 @@ module ReadlineNG
       # TODO This method is getting monolithic, think about how to modularise it
       case c
       when "\r"
-        @lines += [@buf]
-        reset
+        if @buf[@index-1] == ?\\
+          @buf[@index-1] = "\n"
+        else
+          @lines += [@buf]
+          reset
+        end
       when CONTROL_INT
         raise Interrupt
       when KB_BS
