@@ -58,10 +58,8 @@ module ReadlineNG
     end
 
     def wait(n)
-      (n * polling_resolution).times do
-        tick
-        sleep 1.0/polling_resolution
-      end
+      to_read, _, _ = IO.select([STDIN], [], [], n)
+      tick unless to_read.empty?
     end
 
     def puts_above(string)
