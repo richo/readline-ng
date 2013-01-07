@@ -88,6 +88,11 @@ describe ReadlineNG do
     @reader.get_line.should == "rawr\nthing"
   end
 
+  it "Shouldn't explode if you backspace beyond the start of the line" do
+    STDIN.stub(:read_nonblock).and_return("rawr", "\x7F"*14, "rawr\r")
+    @reader.get_line.should == "rawr"
+  end
+
   # TODO it "should erase the displayed line when input is terminated" do
 
 end
